@@ -107,7 +107,7 @@ Where ![V_{REF}](https://latex.codecogs.com/svg.latex?V_{REF}) is the miro-chip 
 
 ![S_{FSR}=\frac{V}{R(V_{REF}-V)}](https://latex.codecogs.com/svg.latex?S_{FSR}=\frac{V}{R(V_{REF}-V)})
 
-Because the voltages are produced by the ADC as a 12 bit number representing the relative voltage to ![V_{REF}](https://latex.codecogs.com/svg.latex?V_{REF}) we can replace them with their "digital" representation: the [V_{REF}](https://latex.codecogs.com/svg.latex?V_{REF}) becomes 4095 (the largest 12 bit numbers) and V will be replaced with *A* as in the 12bit representation of the actual voltage *V*. We can therefore write the previous equation as:
+Because the voltages are produced by the ADC as a 12 bit number representing the relative voltage to ![V_{REF}](https://latex.codecogs.com/svg.latex?V_{REF}) we can replace them with their "digital" representation: the ![V_{REF}](https://latex.codecogs.com/svg.latex?V_{REF}) becomes 4095 (the largest 12 bit numbers) and V will be replaced with *A* as in the 12bit representation of the actual voltage *V*. We can therefore write the previous equation as:
 
 ![S_{FSR}=\frac{A}{R(4095-A)}](https://latex.codecogs.com/svg.latex?S_{FSR}=\frac{A}{R(4095-A)})
 
@@ -115,7 +115,7 @@ We can now define a measure (we'll call it ![raw_{FSR}](https://latex.codecogs.c
 
 ![S_{FSR}=\frac{A}{R(4095-A)}](https://latex.codecogs.com/svg.latex?raw_{FSR}=\frac{A}{4095-A})
 
-This is a very simple measure to calculate and has the advantage that is objectively tracking the same trajectory as the conductance *S* of the FSR. If the ADC reading *A* is 0 then the *raw* value will be 0. If the reading is 4095 (saturated input) we will have a division by 0 so we will consider that the *raw* value 4095. If the value is 4094 then the *raw* becomes 4094. But what is interesting is that the shape of this translation is not linear due to the (4095-A) denominator.
+This is a very simple measure to calculate and has the advantage that is objectively tracking the same trajectory as the conductance *S* of the FSR. If the ADC reading *A* is 0 then the *raw* value will be 0. If the reading is 4095 (saturated input) we will have a division by 0 so we will consider that the *raw* value is 4095. If the value is 4094 then the *raw* becomes 4094. But what is interesting is that the shape of this translation is not linear due to the (4095-A) denominator and follows the same shape of the conductance of the FSR, hence of the pressure applied. The formula above also has the huge advantage that all calculations can be done using ``intege`` data types and avoiding ``float`` calculations.
 
 This *raw* value is what we provide in the registers 72-76 and this should only be used in a comparative manner (relative to the other FSRs) to determine a relative position of the resultant forces across all 4 sensors. To accommodate the differences between sensors we provide registers for [calibrating](#calibration) the raw readings so that combining the values are more accurate.
 
